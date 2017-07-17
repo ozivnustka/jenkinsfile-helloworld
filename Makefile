@@ -8,6 +8,9 @@ ifndef VERBOSE
 .SILENT:
 endif
 
+infra:
+	docker-compose up -d
+
 test:
 	NODE_ENV=test $(bin)mocha
 

@@ -9,6 +9,11 @@ pipeline {
                 sh 'npm i'
             }
         }
+        stage('Infra') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
         stage('Test') {
             steps {
                 sh 'npm test'
