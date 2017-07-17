@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'Node 8.1.4'
+        nodejs 'Node 6.x'
     }
     stages {
         stage('Example') {
@@ -10,4 +10,4 @@ pipeline {
             }
         }
     }
-}
+}   
