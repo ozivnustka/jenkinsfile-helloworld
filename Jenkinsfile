@@ -4,9 +4,14 @@ pipeline {
         nodejs 'nodejs8'
     }
     stages {
-        stage('Example') {
+        stage('Init') {
             steps {
-                sh 'npm --version'
+                sh 'npm i'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'make test'
             }
         }
     }
