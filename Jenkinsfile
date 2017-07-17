@@ -5,12 +5,12 @@ node('node') {
     try {
 
        stage('Checkout'){
-
+          print "Checkout"
           checkout scm
        }
 
        stage('Test'){
-
+         print "Test"
          env.NODE_ENV = "test"
 
          print "Environment will be : ${env.NODE_ENV}"
