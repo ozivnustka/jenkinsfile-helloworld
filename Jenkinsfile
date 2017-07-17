@@ -1,34 +1,39 @@
-pipeline {
-    agent any
+node('node') {
 
-    stages {
-        stage('Initialize') {
-            steps {
-                echo 'Initializing...'
-                def node = tool name: 'Node-8.1.4', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                env.PATH = "${node}/bin:${env.PATH}"
-            }
-        }
+    currentBuild.result = "SUCCESS"
 
-        stage('Checkout') {
-            steps {
-                echo 'Getting source code...'
-                checkout scm
-            }
-        }
+    try {
 
-        stage('Build') {
-            steps {
-                echo 'Building dependencies...'
-                sh 'npm i'
-            }
-        }
+       stage('Checkout'){
 
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-                sh 'npm test'
-            }
-        }
+          checkout scm
+       }
+
+       stage('Test'){
+
+         env.NODE_ENV = "test"
+
+         print "Environment will be : ${env.NODE_ENV}"
+
+         sh 'node -v'
+         sh 'npm prune'
+         sh 'npm install'
+         sh 'npm test'
+
+       }
+
     }
+    catch (err) {
+
+        currentBuild.result = "FAILURE"
+
+            mail body: "project build error is here: ${env.BUILD_URL}" ,
+            from: 'xxxx@yyyy.com',
+            replyTo: 'yyyy@yyyy.com',
+            subject: 'project build failed',
+            to: 'zzzz@yyyyy.com'
+
+        throw err
+    }
+
 }
